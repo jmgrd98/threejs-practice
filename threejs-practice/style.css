@@ -18,6 +18,14 @@ body, html{
   z-index: 1;
 }
 
+#canvas:hover{
+  cursor: grab;
+}
+
+#canvas:active{
+  cursor: grabbing;
+}
+
 nav{
   color: white;
   z-index: 2;
