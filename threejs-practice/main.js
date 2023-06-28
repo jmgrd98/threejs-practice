@@ -1,4 +1,6 @@
 import * as three from 'three';
+import './style.css';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new three.Scene();
 
@@ -24,7 +26,9 @@ const camera = new three.PerspectiveCamera(45, size.width / size.height, 0.1, 10
 camera.position.z = 20;
 scene.add(camera);
 
+
 const canvas = document.querySelector('#canvas');
+const controls = new OrbitControls(camera, canvas);
 
 const renderer = new three.WebGLRenderer({
   canvas,
@@ -33,3 +37,25 @@ const renderer = new three.WebGLRenderer({
 renderer.setSize(size.width, size.height);
 
 renderer.render(scene, camera);
+
+window.addEventListener('resize', () => {
+  size.width = window.innerWidth;
+  size.height = window.innerHeight;
+
+  camera.aspect = size.width / size.height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(size.width, size.height);
+  renderer.render(scene, camera);
+});
+
+const loop = () => {
+  window.requestAnimationFrame(loop);
+
+  mesh.rotation.x += 0.2;
+  mesh.rotation.y += 0.2;
+
+  renderer.render(scene, camera);
+};
+
+loop();
